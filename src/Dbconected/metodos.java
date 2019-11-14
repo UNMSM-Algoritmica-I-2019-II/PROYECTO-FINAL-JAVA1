@@ -67,6 +67,8 @@ public class metodos {
             System.out.println(e);
         }
         return busqueda_usuario;
+        
+        
     }
 
 }
