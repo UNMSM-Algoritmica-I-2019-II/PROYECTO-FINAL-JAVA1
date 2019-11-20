@@ -9,12 +9,12 @@ package Final;
  * @author Gonzalo
  */
 public class main {
-    
-    public static void main(String [] sqrt){
+
+    public static void main(String[] sqrt) {
         login ventana1 = new login();
         ventana1.setVisible(true);
         ventana1.setLocationRelativeTo(null);
-        
+
     }
-    
+
 }
