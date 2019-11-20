@@ -5,6 +5,7 @@
  */
 package Final;
 
+import Dbconected.metodos;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -20,6 +21,8 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
     }
+
+    metodos metodos = new metodos();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,41 +154,48 @@ public class login extends javax.swing.JFrame {
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
         String nombre = usuario.getText();
         String password = contraseña.getText();
-        
-        if(nombre.isEmpty() || password.isEmpty() ){
-            
-            JOptionPane.showMessageDialog(null,"algun campo esta vacio \nIntentelo nuevamente");
+        String busqueda_usuario = metodos.buscarUsuarioRegistrado(nombre, password);
+
+        if (nombre.isEmpty() || password.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "algun campo esta vacio \nIntentelo nuevamente");
             usuario.setText(null);
             contraseña.setText(null);
             usuario.requestFocus();
-            
-        } else{
-            if(nombre.equals("admin")&& password.equals("admin")){
-               menu menux = new menu();
-               menux.setVisible(true);
-               menux.setLocationRelativeTo(null);
-               this.dispose();
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Contraseña y/o Usuarios incorrectos");
-                usuario.setText(null);
-            contraseña.setText(null);
-            usuario.requestFocus();
+
+        } else {
+            if (nombre.equals("admin") && password.equals("admin")) {
+                menu menux = new menu();
+                menux.setVisible(true);
+                menux.setLocationRelativeTo(null);
+                this.dispose();
+            } else {
+                if (busqueda_usuario.equals("usuario encontrado")) {
+                    menu menux = new menu();
+                    menux.setVisible(true);
+                    menux.setLocationRelativeTo(null);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Contraseña y/o Usuarios incorrectos");
+                    usuario.setText(null);
+                    contraseña.setText(null);
+                    usuario.requestFocus();
+                }
             }
         }
-        
+
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioKeyPressed
         // TODO add your handling code here:
-        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             contraseña.requestFocus();
         }
     }//GEN-LAST:event_usuarioKeyPressed
 
     private void contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraseñaKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             ingresar.requestFocus();
             ingresar.doClick();
         }
