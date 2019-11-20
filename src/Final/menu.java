@@ -6,12 +6,19 @@
 package Final;
 
 import Dbconected.basedatos;
+import java.awt.event.KeyEvent;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Gonzalo
  */
 public class menu extends javax.swing.JFrame {
+
+    static Connection cn;
+     static Statement s;
+     static ResultSet rs;
 
     /**
      * Creates new form menu
@@ -32,8 +39,17 @@ public class menu extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        Mostrar_Inventario = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablita = new javax.swing.JTable();
+        Busqueda = new javax.swing.JButton();
+        jxjx = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla_proveedores = new javax.swing.JTable();
+        Mostrar_proveedores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,19 +60,81 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        Mostrar_Inventario.setText("Mostrar Inventario");
+        Mostrar_Inventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Mostrar_InventarioActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Realizar una busqueda: ");
+
+        tablita.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tablita);
+
+        Busqueda.setText("Buscar");
+
+        jxjx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jxjxActionPerformed(evt);
+            }
+        });
+        jxjx.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jxjxKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(288, Short.MAX_VALUE)
-                .addComponent(jButton2)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(118, 118, 118)
+                                .addComponent(Mostrar_Inventario))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jLabel1)
+                                .addGap(41, 41, 41)
+                                .addComponent(jxjx, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 43, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Busqueda)
+                    .addComponent(jxjx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(Mostrar_Inventario)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -70,19 +148,46 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        Tabla_proveedores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(Tabla_proveedores);
+
+        Mostrar_proveedores.setText("Mostrar Proveedores");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(288, Short.MAX_VALUE)
-                .addComponent(jButton3)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(Mostrar_proveedores)
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(Mostrar_proveedores)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -118,6 +223,55 @@ public class menu extends javax.swing.JFrame {
         login2.setLocationRelativeTo(null);//hacer que el nuevo objeto aparezca al centro
         this.dispose();//cerrar objeto actual
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void Mostrar_InventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mostrar_InventarioActionPerformed
+        // TODO add your handling code here:
+         try {
+            //Para establecer el modelo al JTable
+            DefaultTableModel modelo = new DefaultTableModel();
+            this.tablita.setModel(modelo);
+            //Para conectarnos a nuestra base de datos
+            String url = "jdbc:oracle:thin:@localhost:1521:XE";
+            // Establecemos los valores de cadena de conexión, usuario y contraseña
+            cn = DriverManager.getConnection(url, "gonzalo", "admin");
+            //Para ejecutar la consulta
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+             rs = s.executeQuery("select * from inventario");
+            //Obteniendo la informacion de las columnas que estan siendo consultadas
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+            for (int i = 1; i <= cantidadColumnas; i++) {
+             modelo.addColumn(rsMd.getColumnLabel(i));
+            }
+            //Creando las filas para el JTable
+            while (rs.next()) {
+             Object[] fila = new Object[cantidadColumnas];
+             for (int i = 0; i < cantidadColumnas; i++) {
+               fila[i]=rs.getObject(i+1);
+             }
+             modelo.addRow(fila);
+            }
+            rs.close();
+            cn.close();
+       } catch (SQLException ex) {
+           System.out.println(ex);
+       }
+    }//GEN-LAST:event_Mostrar_InventarioActionPerformed
+
+    private void jxjxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jxjxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jxjxActionPerformed
+
+    private void jxjxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jxjxKeyPressed
+        // TODO add your handling code here:
+        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        Busqueda.requestFocus();
+        Busqueda.doClick();
+        }
+    }//GEN-LAST:event_jxjxKeyPressed
 
     /**
      * @param args the command line arguments
@@ -155,10 +309,19 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Busqueda;
+    private javax.swing.JButton Mostrar_Inventario;
+    private javax.swing.JButton Mostrar_proveedores;
+    private javax.swing.JTable Tabla_proveedores;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jxjx;
+    private javax.swing.JTable tablita;
     // End of variables declaration//GEN-END:variables
 }
