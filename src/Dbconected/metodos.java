@@ -5,19 +5,22 @@
  */
 package Dbconected;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
 
 /**
  *
  * @author Gonzalo
  */
 public class metodos {
+    
 
     public static basedatos conexion = new basedatos();
-
+    
+    static Connection conn=null;
+    static Statement st=null;
+    static ResultSet rs=null;
     public static PreparedStatement sentencia_preparada;
     public static ResultSet resultado;
     public static int resultado_numero;
@@ -38,7 +41,7 @@ public class metodos {
             }
             conexion.close();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
 
@@ -70,5 +73,8 @@ public class metodos {
         
         
     }
+    
+    
+    
 
 }
