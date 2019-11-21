@@ -28,18 +28,18 @@ public class metodos {
     public static String buscarNombre(String usuario) {
 
         String busqueda_nombre = null;
-        Connection conexion = null;
+        Connection coneccion = null;
         try {
-            conexion = basedatos.conectar();
+            coneccion = basedatos.conectar();
             String sentencia_buscar = ("SELECT nombre,apellidos FROM EMPLEADOS WHERE usuario = '" + usuario + "'");
-            sentencia_preparada = conexion.prepareStatement(sentencia_buscar);
+            sentencia_preparada = coneccion.prepareStatement(sentencia_buscar);
             resultado = sentencia_preparada.executeQuery();
             if (resultado.next()) {
                 String nombre = resultado.getString("nombre");
                 String apellidos = resultado.getString("apellidos");
                 busqueda_nombre = (nombre + " " + apellidos);
             }
-            conexion.close();
+            coneccion.close();
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -50,13 +50,13 @@ public class metodos {
     
     public static String buscarUsuarioRegistrado(String usuario, String contraseña){
         String busqueda_usuario = null;
-        Connection conexion = null;
+        Connection coneccion2 = null;
         
         
         try {
-            conexion = basedatos.conectar();
+            coneccion2 = basedatos.conectar();
             String sentencia_buscar_usuario = ("SELECT usuario,contraseña FROM empleados WHERE usuario = '"+ usuario +"' and contraseña ='"+ contraseña + "'" );
-            sentencia_preparada = conexion.prepareStatement(sentencia_buscar_usuario);
+            sentencia_preparada = coneccion2.prepareStatement(sentencia_buscar_usuario);
             resultado = sentencia_preparada.executeQuery();
             if(resultado.next()){
                 busqueda_usuario = "usuario encontrado";
@@ -64,7 +64,7 @@ public class metodos {
             else{
                 busqueda_usuario = "usuario no encontrado";
             }
-            conexion.close();
+            coneccion2.close();
         }
         catch(SQLException e){
             System.out.println(e);

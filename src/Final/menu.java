@@ -16,9 +16,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class menu extends javax.swing.JFrame {
 
-    static Connection cn;
-     static Statement s;
-     static ResultSet rs;
+    
+    
+     
 
     /**
      * Creates new form menu
@@ -162,6 +162,11 @@ public class menu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Tabla_proveedores);
 
         Mostrar_proveedores.setText("Mostrar Proveedores");
+        Mostrar_proveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Mostrar_proveedoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -173,19 +178,19 @@ public class menu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(112, 112, 112)
+                .addGap(111, 111, 111)
                 .addComponent(Mostrar_proveedores)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+                .addContainerGap(81, Short.MAX_VALUE)
                 .addComponent(Mostrar_proveedores)
-                .addGap(35, 35, 35)
+                .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jButton3)
@@ -226,15 +231,19 @@ public class menu extends javax.swing.JFrame {
 
     private void Mostrar_InventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mostrar_InventarioActionPerformed
         // TODO add your handling code here:
+        Connection cn;
+        Statement s;
+        ResultSet rs;
          try {
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
             this.tablita.setModel(modelo);
             //Para conectarnos a nuestra base de datos
-            String url = "jdbc:oracle:thin:@localhost:1521:XE";
+            //String url = "jdbc:oracle:thin:@localhost:1521:XE";
             // Establecemos los valores de cadena de conexión, usuario y contraseña
-            cn = DriverManager.getConnection(url, "gonzalo", "admin");
+           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
             //Para ejecutar la consulta
+            cn = basedatos.conectar();//cn variable de tipo coneccion
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
              rs = s.executeQuery("select * from inventario");
@@ -272,6 +281,10 @@ public class menu extends javax.swing.JFrame {
         Busqueda.doClick();
         }
     }//GEN-LAST:event_jxjxKeyPressed
+
+    private void Mostrar_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mostrar_proveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Mostrar_proveedoresActionPerformed
 
     /**
      * @param args the command line arguments
