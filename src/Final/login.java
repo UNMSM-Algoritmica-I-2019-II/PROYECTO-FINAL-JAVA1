@@ -154,7 +154,6 @@ public class login extends javax.swing.JFrame {
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
         String nombre = usuario.getText();
         String password = contraseña.getText();
-        String busqueda_usuario = metodos.buscarUsuarioRegistrado(nombre, password);
 
         if (nombre.isEmpty() || password.isEmpty()) {
 
@@ -170,6 +169,8 @@ public class login extends javax.swing.JFrame {
                 menux.setLocationRelativeTo(null);
                 this.dispose();
             } else {
+                
+                String busqueda_usuario = metodos.buscarUsuarioRegistrado(nombre, password);
                 if (busqueda_usuario.equals("usuario encontrado")) {
                     menu menux = new menu();
                     menux.setVisible(true);
