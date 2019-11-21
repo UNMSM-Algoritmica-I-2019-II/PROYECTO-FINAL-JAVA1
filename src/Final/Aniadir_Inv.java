@@ -29,7 +29,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bloqueo = new javax.swing.JTextField();
+        codigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
@@ -43,15 +43,14 @@ public class Aniadir_Inv extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bloqueo.setText("fkjdkvfdk");
-        bloqueo.addActionListener(new java.awt.event.ActionListener() {
+        codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bloqueoActionPerformed(evt);
+                codigoActionPerformed(evt);
             }
         });
-        bloqueo.addKeyListener(new java.awt.event.KeyAdapter() {
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                bloqueoKeyPressed(evt);
+                codigoKeyPressed(evt);
             }
         });
 
@@ -66,6 +65,11 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         });
 
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +112,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
                                 .addGap(28, 28, 28))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bloqueo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +135,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(bloqueo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -154,11 +158,11 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bloqueoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloqueoActionPerformed
+    private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
         // TODO add your handling code here:
         
         
-    }//GEN-LAST:event_bloqueoActionPerformed
+    }//GEN-LAST:event_codigoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -169,12 +173,12 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void bloqueoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bloqueoKeyPressed
+    private void codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyPressed
         // TODO add your handling code here:
         if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
             nombre.requestFocus();
         }
-    }//GEN-LAST:event_bloqueoKeyPressed
+    }//GEN-LAST:event_codigoKeyPressed
 
     private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
         // TODO add your handling code here:
@@ -189,6 +193,18 @@ public class Aniadir_Inv extends javax.swing.JFrame {
             stock.requestFocus();
         }
     }//GEN-LAST:event_precioKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String cod = "A"+codigo.getText();
+        System.out.println(cod);
+        String nombrer = nombre.getText();
+        String precior = precio.getText();
+        String stockr = stock.getText();
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,7 +243,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bloqueo;
+    private javax.swing.JTextField codigo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
