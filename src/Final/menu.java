@@ -114,7 +114,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Modificar");
+        jButton5.setText("Eliminar");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -223,7 +223,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Modificar");
+        jButton7.setText("Eliminar");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
