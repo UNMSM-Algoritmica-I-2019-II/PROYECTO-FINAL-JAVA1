@@ -240,7 +240,7 @@ public class Aniadir_Prov extends javax.swing.JFrame {
             System.out.println(e);
         }
 
-        System.out.println("la cgd xddd");
+        
         this.dispose();//cerrar esta ventana
         menu.setVisible(true);//hacer visible el objeto menu
         menu.setLocationRelativeTo(null);//hacer que la ventana menu aparezca al centro

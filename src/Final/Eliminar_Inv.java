@@ -32,7 +32,7 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 }
    
    private void Cargarcontenido() {
-       String SQL="select * from inventario ";
+       String SQL="select * from inventario order by codigo asc ";
         String datos[]=new String[1];
        // limpiarT();
         try{
@@ -85,7 +85,12 @@ public class Eliminar_Inv extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancelar");
+        jButton2.setText("Atras");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,7 +103,7 @@ public class Eliminar_Inv extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,12 +124,31 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int respuesta=JOptionPane.showConfirmDialog(null,"¿Realmente quiere eliminar este elemento?");
+        if( respuesta == 0){
+            int codi=Lista.getSelectedIndex()+1;
+        String SQL="delete from inventario where codigo = " +codi+ " ";
+        try{
+        cn=basedatos.conectar();
+        s = cn.createStatement();
+        int p=s.executeUpdate(SQL);
+        }
+        catch(Exception e){
+            
+            System.out.println(e);
+        }
+        Cargarcontenido();
+        }//finsi
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
         menu menux = new menu();
         menux.setVisible(true);
         menux.setLocationRelativeTo(null);
         this.dispose();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
