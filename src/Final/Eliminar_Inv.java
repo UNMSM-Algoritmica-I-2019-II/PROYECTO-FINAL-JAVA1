@@ -8,6 +8,8 @@ package Final;
 import Dbconected.basedatos;
 import java.sql.*;
 import javax.swing.DefaultListModel;
+import Dbconected.basedatos;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -16,21 +18,44 @@ import javax.swing.DefaultListModel;
  */
 public class Eliminar_Inv extends javax.swing.JFrame {
 
-    
+    DefaultListModel modelo = new DefaultListModel();
+    Connection cn;
+    Statement s;
+    ResultSet rs;
     /**
      * Creates new form Eliminar_Inv
      */
+   public Eliminar_Inv() {
+    initComponents();
+    Cargarcontenido();
+    Lista.setModel(modelo);
+    
+}
    
+   private void Cargarcontenido() {
+       String SQL="select * from inventario ";
+        String datos[]=new String[1];
+       // limpiarT();
+        try{
+            cn=basedatos.conectar();
+            s = cn.createStatement();
+            rs = s.executeQuery(SQL);
+            while (rs.next()){
+                datos[0]=rs.getString(2);
+               // datos[1]=cn.rt.getString(2);
+                
+                modelo.addElement(datos[0]);
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+       
+       
+   }
     
     
-    public void quitarvalores(){
-        Connection cn;
-        Statement s;
-        ResultSet rs;
-
-
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,19 +66,19 @@ public class Eliminar_Inv extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        Lista = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        Lista.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(Lista);
 
         jButton1.setText("Eliminar");
 
@@ -102,9 +127,6 @@ public class Eliminar_Inv extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-            DefaultListModel modelolista;
-            modelolista = new DefaultListModel();
-            this.jList1.setModel(modelolista);
            
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -144,10 +166,10 @@ public class Eliminar_Inv extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> Lista;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
