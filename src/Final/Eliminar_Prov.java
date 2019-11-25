@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package Final;
+import Dbconected.basedatos;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.DefaultListModel;
+
 
 /**
  *
@@ -11,12 +16,41 @@ package Final;
  */
 public class Eliminar_Prov extends javax.swing.JFrame {
 
+    DefaultListModel modelo = new DefaultListModel();
+    Connection cn;
+    Statement s;
+    ResultSet rs;
     /**
      * Creates new form Eliminar_Prov
      */
     public Eliminar_Prov() {
         initComponents();
+        
+        Cargarcontenido2();
+        Lista2.setModel(modelo);
     }
+    
+    private void Cargarcontenido2() {
+       String SQL="select * from proveedores order by codigo asc ";
+        String datos[]=new String[1];
+       // limpiarT();
+        try{
+            cn=basedatos.conectar();
+            s = cn.createStatement();
+            rs = s.executeQuery(SQL);
+            while (rs.next()){
+                datos[0]=rs.getString(2);
+               // datos[1]=cn.rt.getString(2);
+                
+                modelo.addElement(datos[0]);
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+       
+       
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +61,91 @@ public class Eliminar_Prov extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Lista2 = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Lista2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(Lista2);
+
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Atras");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int respuesta=JOptionPane.showConfirmDialog(null,"¿Realmente quiere eliminar este elemento?");
+        if( respuesta == 0){
+            int codi=Lista2.getSelectedIndex()+1;
+            String SQL="delete from proveedores where codigo = " +codi+ " ";
+            try{
+                cn=basedatos.conectar();
+                s = cn.createStatement();
+                int p=s.executeUpdate(SQL);
+            }
+            catch(Exception e){
+
+                System.out.println(e);
+            }
+            Cargarcontenido2();
+        }//finsi
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        menu menux = new menu();
+        menux.setVisible(true);
+        menux.setLocationRelativeTo(null);
+        this.dispose();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +183,9 @@ public class Eliminar_Prov extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> Lista2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
