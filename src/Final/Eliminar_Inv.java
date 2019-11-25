@@ -294,6 +294,8 @@ public class Eliminar_Inv extends javax.swing.JFrame {
             
             System.out.println(e);
         }
+        modelo.clear();
+        Lista.setModel(modelo);
         Cargarcontenido();
         }//finsi
     }//GEN-LAST:event_eliminarActionPerformed

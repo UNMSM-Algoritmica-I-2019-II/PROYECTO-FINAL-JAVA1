@@ -481,7 +481,7 @@ public class menu extends javax.swing.JFrame {
             this.Tabla_proveedores.setModel(modelo);
             cn = basedatos.conectar();
             s = cn.createStatement();
-            rs = s.executeQuery("select * from proveedores where empresa = '" + buscar + "' OR codigo = " + buscar  );
+            rs = s.executeQuery("select * from proveedores where empresa = '" + buscar + "' OR codigo = '" + buscar + "'" );
              ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
             int cantidadColumnas = rsMd.getColumnCount();
