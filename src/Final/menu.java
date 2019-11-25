@@ -25,7 +25,91 @@ public class menu extends javax.swing.JFrame {
      */
     public menu() {
         initComponents();
+        cargar();
+        cargar2();
     }
+    
+    private void cargar(){
+    Connection cn;
+        Statement s;
+        ResultSet rs;
+         try {
+            //Para establecer el modelo al JTable
+            DefaultTableModel modelo = new DefaultTableModel();
+            this.tablita.setModel(modelo);
+            //Para conectarnos a nuestra base de datos
+            //String url = "jdbc:oracle:thin:@localhost:1521:XE";
+            // Establecemos los valores de cadena de conexión, usuario y contraseña
+           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
+            //Para ejecutar la consulta
+            cn = basedatos.conectar();//cn variable de tipo coneccion
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+             rs = s.executeQuery("select * from inventario ORDER BY codigo ASC ");
+            //Obteniendo la informacion de las columnas que estan siendo consultadas
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+            for (int i = 1; i <= cantidadColumnas; i++) {
+             modelo.addColumn(rsMd.getColumnLabel(i));
+            }
+            //Creando las filas para el JTable
+            while (rs.next()) {
+             Object[] fila = new Object[cantidadColumnas];
+             for (int i = 0; i < cantidadColumnas; i++) {
+               fila[i]=rs.getObject(i+1);
+             }
+             modelo.addRow(fila);
+            }
+            rs.close();
+            cn.close();
+       } catch (SQLException ex) {
+           System.out.println(ex);
+       }
+    
+    }
+    
+    private void cargar2(){
+    Connection cn;
+        Statement s;
+        ResultSet rs;
+         try {
+            //Para establecer el modelo al JTable
+            DefaultTableModel modelo = new DefaultTableModel();
+            this.Tabla_proveedores.setModel(modelo);
+            //Para conectarnos a nuestra base de datos
+            //String url = "jdbc:oracle:thin:@localhost:1521:XE";
+            // Establecemos los valores de cadena de conexión, usuario y contraseña
+           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
+            //Para ejecutar la consulta
+            cn = basedatos.conectar();//cn variable de tipo coneccion
+            s = cn.createStatement();
+            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
+             rs = s.executeQuery("select * from proveedores Order by empresa asc ");
+            //Obteniendo la informacion de las columnas que estan siendo consultadas
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+            for (int i = 1; i <= cantidadColumnas; i++) {
+             modelo.addColumn(rsMd.getColumnLabel(i));
+            }
+            //Creando las filas para el JTable
+            while (rs.next()) {
+             Object[] fila = new Object[cantidadColumnas];
+             for (int i = 0; i < cantidadColumnas; i++) {
+               fila[i]=rs.getObject(i+1);
+             }
+             modelo.addRow(fila);
+            }
+            rs.close();
+            cn.close();
+       } catch (SQLException ex) {
+           System.out.println(ex);
+       }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +123,6 @@ public class menu extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        Mostrar_Inventario = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablita = new javax.swing.JTable();
@@ -51,7 +134,6 @@ public class menu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_proveedores = new javax.swing.JTable();
-        Mostrar_proveedores = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         buscarp = new javax.swing.JTextField();
         buscar_proveedor = new javax.swing.JButton();
@@ -64,13 +146,6 @@ public class menu extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        Mostrar_Inventario.setText("Mostrar Inventario");
-        Mostrar_Inventario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Mostrar_InventarioActionPerformed(evt);
             }
         });
 
@@ -115,6 +190,11 @@ public class menu extends javax.swing.JFrame {
         });
 
         jButton5.setText("Eliminar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -126,17 +206,12 @@ public class menu extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(118, 118, 118)
-                                .addComponent(Mostrar_Inventario))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel1)
-                                .addGap(41, 41, 41)
-                                .addComponent(recuadro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(recuadro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 45, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
@@ -155,10 +230,8 @@ public class menu extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(Busqueda)
                     .addComponent(recuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(Mostrar_Inventario)
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -188,13 +261,6 @@ public class menu extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(Tabla_proveedores);
-
-        Mostrar_proveedores.setText("Mostrar Proveedores");
-        Mostrar_proveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Mostrar_proveedoresActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Realizar una busqueda: ");
 
@@ -234,10 +300,6 @@ public class menu extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(Mostrar_proveedores)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jButton6)
@@ -263,10 +325,8 @@ public class menu extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(buscarp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscar_proveedor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(Mostrar_proveedores)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -307,47 +367,6 @@ public class menu extends javax.swing.JFrame {
         this.dispose();//cerrar objeto actual
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void Mostrar_InventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mostrar_InventarioActionPerformed
-        // TODO add your handling code here:
-        Connection cn;
-        Statement s;
-        ResultSet rs;
-         try {
-            //Para establecer el modelo al JTable
-            DefaultTableModel modelo = new DefaultTableModel();
-            this.tablita.setModel(modelo);
-            //Para conectarnos a nuestra base de datos
-            //String url = "jdbc:oracle:thin:@localhost:1521:XE";
-            // Establecemos los valores de cadena de conexión, usuario y contraseña
-           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
-            //Para ejecutar la consulta
-            cn = basedatos.conectar();//cn variable de tipo coneccion
-            s = cn.createStatement();
-            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-             rs = s.executeQuery("select * from inventario ORDER BY codigo ASC ");
-            //Obteniendo la informacion de las columnas que estan siendo consultadas
-            ResultSetMetaData rsMd = rs.getMetaData();
-            //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
-            //Establecer como cabezeras el nombre de las colimnas
-            for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
-            }
-            //Creando las filas para el JTable
-            while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
-            }
-            rs.close();
-            cn.close();
-       } catch (SQLException ex) {
-           System.out.println(ex);
-       }
-    }//GEN-LAST:event_Mostrar_InventarioActionPerformed
-
     private void recuadroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recuadroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_recuadroActionPerformed
@@ -360,47 +379,6 @@ public class menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_recuadroKeyPressed
 
-    private void Mostrar_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mostrar_proveedoresActionPerformed
-        // TODO add your handling code here:
-         Connection cn;
-        Statement s;
-        ResultSet rs;
-         try {
-            //Para establecer el modelo al JTable
-            DefaultTableModel modelo = new DefaultTableModel();
-            this.Tabla_proveedores.setModel(modelo);
-            //Para conectarnos a nuestra base de datos
-            //String url = "jdbc:oracle:thin:@localhost:1521:XE";
-            // Establecemos los valores de cadena de conexión, usuario y contraseña
-           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
-            //Para ejecutar la consulta
-            cn = basedatos.conectar();//cn variable de tipo coneccion
-            s = cn.createStatement();
-            //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-             rs = s.executeQuery("select * from proveedores Order by empresa asc ");
-            //Obteniendo la informacion de las columnas que estan siendo consultadas
-            ResultSetMetaData rsMd = rs.getMetaData();
-            //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
-            //Establecer como cabezeras el nombre de las colimnas
-            for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
-            }
-            //Creando las filas para el JTable
-            while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
-            }
-            rs.close();
-            cn.close();
-       } catch (SQLException ex) {
-           System.out.println(ex);
-       }
-    }//GEN-LAST:event_Mostrar_proveedoresActionPerformed
-
     private void buscarpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarpActionPerformed
@@ -411,6 +389,7 @@ public class menu extends javax.swing.JFrame {
         anadir.setVisible(true);
         anadir.setLocationRelativeTo(null);
         this.dispose();
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -418,6 +397,7 @@ public class menu extends javax.swing.JFrame {
         Aniadir_Prov prove = new Aniadir_Prov();
         prove.setVisible(true);
         prove.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaActionPerformed
@@ -510,6 +490,14 @@ public class menu extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_buscarpKeyPressed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Eliminar_Inv eliminar = new Eliminar_Inv();
+        eliminar.setVisible(true);
+        eliminar.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -547,8 +535,6 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Busqueda;
-    private javax.swing.JButton Mostrar_Inventario;
-    private javax.swing.JButton Mostrar_proveedores;
     private javax.swing.JTable Tabla_proveedores;
     private javax.swing.JButton buscar_proveedor;
     private javax.swing.JTextField buscarp;
