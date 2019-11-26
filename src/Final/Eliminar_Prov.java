@@ -5,6 +5,7 @@
  */
 package Final;
 import Dbconected.basedatos;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.DefaultListModel;
