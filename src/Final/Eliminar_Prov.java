@@ -76,6 +76,15 @@ public class Eliminar_Prov extends javax.swing.JFrame {
        proveedor.setEditable(true);
    }
 
+   private void vaciar(){
+       
+       codigo.setText(null);
+       nombre.setText(null);
+       stock.setText(null);
+       precio.setText(null);
+       proveedor.setText(null);
+   
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -336,7 +345,14 @@ public class Eliminar_Prov extends javax.swing.JFrame {
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // TODO add your handling code here:
+        if(codigo.getText().length()==0){
         desbloquear();
+        codigo.setText("3");
+        }
+        else{
+        Contenidoinicial();
+        vaciar();
+        }
     }//GEN-LAST:event_modificarActionPerformed
 
     /**

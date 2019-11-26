@@ -29,7 +29,7 @@ public class Eliminar_Inv extends javax.swing.JFrame {
     initComponents();
     Cargarcontenido();
     Lista.setModel(modelo);
-    Contenidoinicial();
+    bloquear();
 }
    
    private void Cargarcontenido() {
@@ -54,7 +54,7 @@ public class Eliminar_Inv extends javax.swing.JFrame {
        
    }
    
-   private void Contenidoinicial(){
+   private void bloquear(){
    
        codigo.setEnabled(false);
        codigo.setEditable(false);
@@ -79,7 +79,14 @@ public class Eliminar_Inv extends javax.swing.JFrame {
        proveedor.setEnabled(true);
        proveedor.setEditable(true);
    }
-    
+   
+   private void vaciar(){
+       codigo.setText(null);
+       nombre.setText(null);
+       stock.setText(null);
+       precio.setText(null);
+       proveedor.setText(null);
+   }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -302,7 +309,14 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // TODO add your handling code here:
+        if(codigo.getText().length()==0){
         desbloquear();
+        codigo.setText("3");
+        }
+        else{
+        bloquear();
+        vaciar();
+        }
     }//GEN-LAST:event_modificarActionPerformed
 
     private void proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedorActionPerformed
