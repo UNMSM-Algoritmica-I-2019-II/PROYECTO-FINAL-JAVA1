@@ -26,7 +26,7 @@ public class Eliminar_Prov extends javax.swing.JFrame {
      */
     public Eliminar_Prov() {
         initComponents();
-        
+        Contenidoinicial();
         Cargarcontenido2();
         Lista2.setModel(modelo);
     }
@@ -47,10 +47,33 @@ public class Eliminar_Prov extends javax.swing.JFrame {
             }
         }catch(Exception e){
             System.out.println(e);
-        }
-        
-       
-       
+        }    
+    }
+    
+    private void Contenidoinicial(){
+   
+       codigo.setEnabled(false);
+       codigo.setEditable(false);
+       nombre.setEnabled(false);
+       nombre.setEditable(false);
+       stock.setEnabled(false);
+       stock.setEditable(false);
+       precio.setEnabled(false);
+       precio.setEditable(false);
+       proveedor.setEnabled(false);
+       proveedor.setEditable(false);
+   }
+   
+   private void desbloquear(){
+
+       nombre.setEnabled(true);
+       nombre.setEditable(true);
+       stock.setEnabled(true);
+       stock.setEditable(true);
+       precio.setEnabled(true);
+       precio.setEditable(true);
+       proveedor.setEnabled(true);
+       proveedor.setEditable(true);
    }
 
     /**
@@ -280,7 +303,7 @@ public class Eliminar_Prov extends javax.swing.JFrame {
         // TODO add your handling code here:
         int respuesta=JOptionPane.showConfirmDialog(null,"¿Realmente quiere eliminar este elemento?");
         if( respuesta == 0){
-            int codi=Lista.getSelectedIndex()+1;
+            int codi=Lista2.getSelectedIndex()+1;
             String SQL="delete from inventario where codigo = " +codi+ " ";
             try{
                 cn=basedatos.conectar();
@@ -291,7 +314,7 @@ public class Eliminar_Prov extends javax.swing.JFrame {
 
                 System.out.println(e);
             }
-            Cargarcontenido();
+            Cargarcontenido2();
         }//finsi
     }//GEN-LAST:event_eliminarActionPerformed
 
