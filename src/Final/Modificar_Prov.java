@@ -4,87 +4,104 @@
  * and open the template in the editor.
  */
 package Final;
+
 import Dbconected.basedatos;
+import Dbconected.metodos;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.DefaultListModel;
 
-
 /**
  *
  * @author Gonzalo
  */
-public class Eliminar_Prov extends javax.swing.JFrame {
+public class Modificar_Prov extends javax.swing.JFrame {
 
     DefaultListModel modelo = new DefaultListModel();
     Connection cn;
     Statement s;
     ResultSet rs;
+
     /**
      * Creates new form Eliminar_Prov
      */
-    public Eliminar_Prov() {
+    public Modificar_Prov() {
         initComponents();
         Contenidoinicial();
         Cargarcontenido2();
         Lista2.setModel(modelo);
     }
-    
+
     private void Cargarcontenido2() {
-       String SQL="select * from proveedores order by codigo asc ";
-        String datos[]=new String[1];
-       // limpiarT();
-        try{
-            cn=basedatos.conectar();
+        String SQL = "select * from proveedores order by codigo asc ";
+        String datos[] = new String[1];
+        // limpiarT();
+        try {
+            cn = basedatos.conectar();
             s = cn.createStatement();
             rs = s.executeQuery(SQL);
-            while (rs.next()){
-                datos[0]=rs.getString(2);
-               // datos[1]=cn.rt.getString(2);
-                
+            while (rs.next()) {
+                datos[0] = rs.getString(2);
+                // datos[1]=cn.rt.getString(2);
+
                 modelo.addElement(datos[0]);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
-        }    
+        }
     }
-    
-    private void Contenidoinicial(){
-   
-       codigo.setEnabled(false);
-       codigo.setEditable(false);
-       nombre.setEnabled(false);
-       nombre.setEditable(false);
-       stock.setEnabled(false);
-       stock.setEditable(false);
-       precio.setEnabled(false);
-       precio.setEditable(false);
-       proveedor.setEnabled(false);
-       proveedor.setEditable(false);
-   }
-   
-   private void desbloquear(){
 
-       nombre.setEnabled(true);
-       nombre.setEditable(true);
-       stock.setEnabled(true);
-       stock.setEditable(true);
-       precio.setEnabled(true);
-       precio.setEditable(true);
-       proveedor.setEnabled(true);
-       proveedor.setEditable(true);
-   }
+    private void Contenidoinicial() {
 
-   private void vaciar(){
-       
-       codigo.setText(null);
-       nombre.setText(null);
-       stock.setText(null);
-       precio.setText(null);
-       proveedor.setText(null);
-   
-   }
+        codigo.setEnabled(false);
+        codigo.setEditable(false);
+        empresa.setEnabled(false);
+        empresa.setEditable(false);
+        celular.setEnabled(false);
+        celular.setEditable(false);
+        telefono.setEnabled(false);
+        telefono.setEditable(false);
+        direccion.setEnabled(false);
+        direccion.setEditable(false);
+    }
+
+    private void bloquear() {
+
+        codigo.setEnabled(false);
+        codigo.setEditable(false);
+        empresa.setEnabled(false);
+        empresa.setEditable(false);
+        telefono.setEnabled(false);
+        telefono.setEditable(false);
+        celular.setEnabled(false);
+        celular.setEditable(false);
+        direccion.setEnabled(false);
+        direccion.setEditable(false);
+    }
+
+    private void desbloquear() {
+
+        empresa.setEnabled(true);
+        empresa.setEditable(true);
+        celular.setEnabled(true);
+        celular.setEditable(true);
+        telefono.setEnabled(true);
+        telefono.setEditable(true);
+        direccion.setEnabled(true);
+        direccion.setEditable(true);
+    }
+
+    private void vaciar() {
+
+        codigo.setText(null);
+        empresa.setText(null);
+        celular.setText(null);
+        telefono.setText(null);
+        direccion.setText(null);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,15 +114,15 @@ public class Eliminar_Prov extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Lista2 = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
-        proveedor = new javax.swing.JTextField();
+        direccion = new javax.swing.JTextField();
         codigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nombre = new javax.swing.JTextField();
-        precio = new javax.swing.JTextField();
+        empresa = new javax.swing.JTextField();
+        telefono = new javax.swing.JTextField();
         eliminar = new javax.swing.JButton();
         atras = new javax.swing.JButton();
-        stock = new javax.swing.JTextField();
+        celular = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         modificar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -119,16 +136,16 @@ public class Eliminar_Prov extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(Lista2);
 
-        jLabel6.setText("Proveedor:");
+        jLabel6.setText("Direccion:");
 
-        proveedor.addActionListener(new java.awt.event.ActionListener() {
+        direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                proveedorActionPerformed(evt);
+                direccionActionPerformed(evt);
             }
         });
-        proveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+        direccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                proveedorKeyPressed(evt);
+                direccionKeyPressed(evt);
             }
         });
 
@@ -145,17 +162,17 @@ public class Eliminar_Prov extends javax.swing.JFrame {
 
         jLabel1.setText("Codigo : ");
 
-        jLabel2.setText("Nombre : ");
+        jLabel2.setText("Empresa:");
 
-        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+        empresa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                nombreKeyPressed(evt);
+                empresaKeyPressed(evt);
             }
         });
 
-        precio.addKeyListener(new java.awt.event.KeyAdapter() {
+        telefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                precioKeyPressed(evt);
+                telefonoKeyPressed(evt);
             }
         });
 
@@ -173,13 +190,13 @@ public class Eliminar_Prov extends javax.swing.JFrame {
             }
         });
 
-        stock.addKeyListener(new java.awt.event.KeyAdapter() {
+        celular.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                stockKeyPressed(evt);
+                celularKeyPressed(evt);
             }
         });
 
-        jLabel4.setText("Precio :");
+        jLabel4.setText("Telefono:");
 
         modificar.setText("Modificar");
         modificar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +205,7 @@ public class Eliminar_Prov extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Stock :");
+        jLabel5.setText("Celular:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,12 +225,12 @@ public class Eliminar_Prov extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                            .addComponent(empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(eliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,18 +260,18 @@ public class Eliminar_Prov extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))))
                 .addGap(25, 25, 25))
         );
@@ -262,17 +279,17 @@ public class Eliminar_Prov extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedorActionPerformed
+    private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_proveedorActionPerformed
+    }//GEN-LAST:event_direccionActionPerformed
 
-    private void proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_proveedorKeyPressed
+    private void direccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direccionKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             modificar.requestFocus();
             modificar.doClick();
         }
-    }//GEN-LAST:event_proveedorKeyPressed
+    }//GEN-LAST:event_direccionKeyPressed
 
     private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
         // TODO add your handling code here:
@@ -280,40 +297,41 @@ public class Eliminar_Prov extends javax.swing.JFrame {
 
     private void codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-            nombre.requestFocus();//focusea al cuadro nombre
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            empresa.requestFocus();//focusea al cuadro nombre
         }
     }//GEN-LAST:event_codigoKeyPressed
 
-    private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
+    private void empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_empresaKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-            precio.requestFocus();//focusea al cuadro precio
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            telefono.requestFocus();//focusea al cuadro precio
         }
-    }//GEN-LAST:event_nombreKeyPressed
+    }//GEN-LAST:event_empresaKeyPressed
 
-    private void precioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioKeyPressed
+    private void telefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonoKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-            stock.requestFocus();//focusea al cuadro stock
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            celular.requestFocus();//focusea al cuadro stock
         }
-    }//GEN-LAST:event_precioKeyPressed
+    }//GEN-LAST:event_telefonoKeyPressed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
-        int respuesta=JOptionPane.showConfirmDialog(null,"¿Realmente quiere eliminar este elemento?");
-        if( respuesta == 0){
-            int codi=Lista2.getSelectedIndex()+1;
-            String SQL="delete from inventario where codigo = " +codi+ " ";
-            try{
-                cn=basedatos.conectar();
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Realmente quiere eliminar este elemento?");
+        if (respuesta == 0) {
+            int codi = Lista2.getSelectedIndex() + 1;
+            String SQL = "delete from proveedores where codigo = " + codi + " ";
+            try {
+                cn = basedatos.conectar();
                 s = cn.createStatement();
-                int p=s.executeUpdate(SQL);
-            }
-            catch(Exception e){
+                int p = s.executeUpdate(SQL);
+            } catch (Exception e) {
 
                 System.out.println(e);
             }
+            modelo.clear();
+            Lista2.setModel(modelo);
             Cargarcontenido2();
         }//finsi
     }//GEN-LAST:event_eliminarActionPerformed
@@ -327,22 +345,48 @@ public class Eliminar_Prov extends javax.swing.JFrame {
 
     }//GEN-LAST:event_atrasActionPerformed
 
-    private void stockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockKeyPressed
+    private void celularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_celularKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-            proveedor.requestFocus();
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            direccion.requestFocus();
         }
-    }//GEN-LAST:event_stockKeyPressed
+    }//GEN-LAST:event_celularKeyPressed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // TODO add your handling code here:
-        if(codigo.getText().length()==0){
-        desbloquear();
-        codigo.setText("3");
-        }
-        else{
-        Contenidoinicial();
-        vaciar();
+        int codi = Lista2.getSelectedIndex() + 1;
+        String codi1 = Integer.toString(codi);
+        if (codigo.getText().length() == 0) {//verificar si el codigo esta vacio
+            desbloquear();
+
+            codigo.setText(codi1);
+        } else {
+            String empresa_upd = empresa.getText();
+            String telefono_upd = telefono.getText();
+            String celular_upd = celular.getText();
+            String direccion_upd = direccion.getText();
+
+            if (empresa_upd == null || telefono_upd == null || celular_upd == null || direccion_upd == null) {
+                bloquear();
+                vaciar();
+                JOptionPane.showMessageDialog(null, "algun campo esta vacio");
+            } else {
+                try {
+                    metodos.ActualizarDatosProv("empresa", empresa_upd, codi1);
+                    metodos.ActualizarDatosProv("telefono", telefono_upd, codi1);
+                    metodos.ActualizarDatosProv("celular", celular_upd, codi1);
+                    metodos.ActualizarDatosProv("direccion", direccion_upd, codi1);
+
+                    bloquear();
+                    vaciar();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            modelo.clear();
+            Lista2.setModel(modelo);
+            Cargarcontenido2();
+
         }
     }//GEN-LAST:event_modificarActionPerformed
 
@@ -363,20 +407,21 @@ public class Eliminar_Prov extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Prov.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Eliminar_Prov().setVisible(true);
+                new Modificar_Prov().setVisible(true);
             }
         });
     }
@@ -384,8 +429,11 @@ public class Eliminar_Prov extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Lista2;
     private javax.swing.JButton atras;
+    private javax.swing.JTextField celular;
     private javax.swing.JTextField codigo;
+    private javax.swing.JTextField direccion;
     private javax.swing.JButton eliminar;
+    private javax.swing.JTextField empresa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -393,9 +441,6 @@ public class Eliminar_Prov extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton modificar;
-    private javax.swing.JTextField nombre;
-    private javax.swing.JTextField precio;
-    private javax.swing.JTextField proveedor;
-    private javax.swing.JTextField stock;
+    private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }

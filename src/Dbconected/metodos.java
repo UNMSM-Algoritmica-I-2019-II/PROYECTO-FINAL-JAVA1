@@ -74,6 +74,44 @@ public class metodos {
         
     }
     
+    public static String ActualizarDatosInv(String dato,String actualizar,String codigo){
+    
+        Connection conexion;
+        
+        try{
+            conexion= basedatos.conectar();
+            String sentencia_actualizar = ("Update inventario set "
+                    + dato + " = '"+ actualizar +"' where codigo = '"+codigo+"'");
+            sentencia_preparada = conexion.prepareStatement(sentencia_actualizar);
+            resultado = sentencia_preparada.executeQuery();
+            conexion.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        
+    return null;
+    }
+    
+    public static String ActualizarDatosProv(String dato,String actualizar,String codigo){
+    
+        Connection conexion;
+        
+        try{
+            conexion= basedatos.conectar();
+            String sentencia_actualizar = ("Update proveedores set "
+                    + dato + " = '"+ actualizar +"' where codigo = '"+codigo+"'");
+            sentencia_preparada = conexion.prepareStatement(sentencia_actualizar);
+            resultado = sentencia_preparada.executeQuery();
+            conexion.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        
+    return null;
+    }
+    
     
     
 

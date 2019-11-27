@@ -6,88 +6,87 @@
 package Final;
 
 import Dbconected.basedatos;
+import Dbconected.metodos;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Gonzalo
  */
-public class Eliminar_Inv extends javax.swing.JFrame {
+public class Modificar_Inv extends javax.swing.JFrame {
 
     DefaultListModel modelo = new DefaultListModel();
     Connection cn;
     Statement s;
     ResultSet rs;
+
     /**
      * Creates new form Eliminar_Inv
      */
-   public Eliminar_Inv() {
-    initComponents();
-    Cargarcontenido();
-    Lista.setModel(modelo);
-    bloquear();
-}
-   
-   private void Cargarcontenido() {
-       String SQL="select * from inventario order by codigo asc ";
-        String datos[]=new String[1];
-       // limpiarT();
-        try{
-            cn=basedatos.conectar();
+    public Modificar_Inv() {
+        initComponents();
+        Cargarcontenido();
+        Lista.setModel(modelo);
+        bloquear();
+    }
+
+    private void Cargarcontenido() {
+        String SQL = "select * from inventario order by codigo asc ";
+        String datos[] = new String[1];
+        // limpiarT();
+        try {
+            cn = basedatos.conectar();
             s = cn.createStatement();
             rs = s.executeQuery(SQL);
-            while (rs.next()){
-                datos[0]=rs.getString(2);
-               // datos[1]=cn.rt.getString(2);
-                
+            while (rs.next()) {
+                datos[0] = rs.getString(2);
+                // datos[1]=cn.rt.getString(2);
+
                 modelo.addElement(datos[0]);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-       
-       
-   }
-   
-   private void bloquear(){
-   
-       codigo.setEnabled(false);
-       codigo.setEditable(false);
-       nombre.setEnabled(false);
-       nombre.setEditable(false);
-       stock.setEnabled(false);
-       stock.setEditable(false);
-       precio.setEnabled(false);
-       precio.setEditable(false);
-       proveedor.setEnabled(false);
-       proveedor.setEditable(false);
-   }
-   
-   private void desbloquear(){
 
-       nombre.setEnabled(true);
-       nombre.setEditable(true);
-       stock.setEnabled(true);
-       stock.setEditable(true);
-       precio.setEnabled(true);
-       precio.setEditable(true);
-       proveedor.setEnabled(true);
-       proveedor.setEditable(true);
-   }
-   
-   private void vaciar(){
-       codigo.setText(null);
-       nombre.setText(null);
-       stock.setText(null);
-       precio.setText(null);
-       proveedor.setText(null);
-   }
-    
+    }
+
+    private void bloquear() {
+
+        codigo.setEnabled(false);
+        codigo.setEditable(false);
+        nombre.setEnabled(false);
+        nombre.setEditable(false);
+        stock.setEnabled(false);
+        stock.setEditable(false);
+        precio.setEnabled(false);
+        precio.setEditable(false);
+        proveedor.setEnabled(false);
+        proveedor.setEditable(false);
+    }
+
+    private void desbloquear() {
+
+        nombre.setEnabled(true);
+        nombre.setEditable(true);
+        stock.setEnabled(true);
+        stock.setEditable(true);
+        precio.setEnabled(true);
+        precio.setEditable(true);
+        proveedor.setEnabled(true);
+        proveedor.setEditable(true);
+    }
+
+    private void vaciar() {
+        codigo.setText(null);
+        nombre.setText(null);
+        stock.setText(null);
+        precio.setText(null);
+        proveedor.setText(null);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -281,22 +280,21 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
-        int respuesta=JOptionPane.showConfirmDialog(null,"¿Realmente quiere eliminar este elemento?");
-        if( respuesta == 0){
-            int codi=Lista.getSelectedIndex()+1;
-        String SQL="delete from inventario where codigo = " +codi+ " ";
-        try{
-        cn=basedatos.conectar();
-        s = cn.createStatement();
-        int p=s.executeUpdate(SQL);
-        }
-        catch(Exception e){
-            
-            System.out.println(e);
-        }
-        modelo.clear();
-        Lista.setModel(modelo);
-        Cargarcontenido();
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Realmente quiere eliminar este elemento?");
+        if (respuesta == 0) {
+            int codi = Lista.getSelectedIndex() + 1;
+            String SQL = "delete from inventario where codigo = " + codi + " ";
+            try {
+                cn = basedatos.conectar();
+                s = cn.createStatement();
+                int p = s.executeUpdate(SQL);
+            } catch (Exception e) {
+
+                System.out.println(e);
+            }
+            modelo.clear();
+            Lista.setModel(modelo);
+            Cargarcontenido();
         }//finsi
     }//GEN-LAST:event_eliminarActionPerformed
 
@@ -306,18 +304,45 @@ public class Eliminar_Inv extends javax.swing.JFrame {
         menux.setVisible(true);
         menux.setLocationRelativeTo(null);
         this.dispose();
-        
+
     }//GEN-LAST:event_atrasActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // TODO add your handling code here:
-        if(codigo.getText().length()==0){
-        desbloquear();
-        codigo.setText("3");
-        }
-        else{
-        bloquear();
-        vaciar();
+
+        int codi = Lista.getSelectedIndex() + 1;
+        String codi1 = Integer.toString(codi);
+        if (codigo.getText().length() == 0) {//verificar si el codigo esta vacio
+            desbloquear();
+
+            codigo.setText(codi1);
+        } else {
+            String nombre_upd = nombre.getText();
+            String precio_upd = precio.getText();
+            String stock_upd = stock.getText();
+            String provee_upd = proveedor.getText();
+
+            if (nombre_upd == null || precio_upd == null || stock_upd == null || provee_upd == null) {
+                bloquear();
+                vaciar();
+                JOptionPane.showMessageDialog(null, "algun campo esta vacio");
+            } else {
+                try {
+                    metodos.ActualizarDatosInv("articulo", nombre_upd, codi1);
+                    metodos.ActualizarDatosInv("precio_unitario", precio_upd, codi1);
+                    metodos.ActualizarDatosInv("stock", stock_upd, codi1);
+                    metodos.ActualizarDatosInv("proveedor", provee_upd, codi1);
+
+                    bloquear();
+                    vaciar();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            modelo.clear();
+            Lista.setModel(modelo);
+            Cargarcontenido();
+
         }
     }//GEN-LAST:event_modificarActionPerformed
 
@@ -327,7 +352,7 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 
     private void proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_proveedorKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             modificar.requestFocus();
             modificar.doClick();
         }
@@ -340,28 +365,28 @@ public class Eliminar_Inv extends javax.swing.JFrame {
 
     private void codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             nombre.requestFocus();//focusea al cuadro nombre
         }
     }//GEN-LAST:event_codigoKeyPressed
 
     private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             precio.requestFocus();//focusea al cuadro precio
         }
     }//GEN-LAST:event_nombreKeyPressed
 
     private void precioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             stock.requestFocus();//focusea al cuadro stock
         }
     }//GEN-LAST:event_precioKeyPressed
 
     private void stockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             proveedor.requestFocus();
         }
 
@@ -384,20 +409,21 @@ public class Eliminar_Inv extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Eliminar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar_Inv.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Eliminar_Inv().setVisible(true);
+                new Modificar_Inv().setVisible(true);
             }
         });
     }

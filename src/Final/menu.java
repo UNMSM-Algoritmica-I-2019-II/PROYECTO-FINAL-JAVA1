@@ -86,7 +86,7 @@ public class menu extends javax.swing.JFrame {
             cn = basedatos.conectar();//cn variable de tipo coneccion
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-             rs = s.executeQuery("select * from proveedores Order by empresa asc ");
+             rs = s.executeQuery("select * from proveedores Order by codigo asc ");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
@@ -518,7 +518,7 @@ public class menu extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        Eliminar_Inv eliminar = new Eliminar_Inv();
+        Modificar_Inv eliminar = new Modificar_Inv();
         eliminar.setVisible(true);
         eliminar.setLocationRelativeTo(null);
         this.dispose();
@@ -536,7 +536,7 @@ public class menu extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        Eliminar_Prov eliminar = new Eliminar_Prov();
+        Modificar_Prov eliminar = new Modificar_Prov();
         eliminar.setVisible(true);
         eliminar.setLocationRelativeTo(null);
         this.dispose();

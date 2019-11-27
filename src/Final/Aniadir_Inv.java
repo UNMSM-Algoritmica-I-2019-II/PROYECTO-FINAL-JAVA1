@@ -239,8 +239,8 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         try{
         cn= basedatos.conectar();
         s = cn.createStatement();
-        rs= s.executeQuery("insert into inventario (codigo,articulo,stock,precio_unitario,stock_minimo,proveedor)"
-                + "values ('"+cod+"','"+nombrer+"',"+stockr+","+precior+",50,'"+provee+"')");
+        rs= s.executeQuery("insert into inventario (codigo,articulo,stock,precio_unitario,proveedor)"
+                + "values ('"+cod+"','"+nombrer+"',"+stockr+","+precior+",'"+provee+"')");
         
         rs.close();
         cn.close();
