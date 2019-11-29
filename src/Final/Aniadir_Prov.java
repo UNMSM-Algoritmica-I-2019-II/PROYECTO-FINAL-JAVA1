@@ -8,6 +8,7 @@ package Final;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import Dbconected.basedatos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -240,10 +241,20 @@ public class Aniadir_Prov extends javax.swing.JFrame {
             System.out.println(e);
         }
 
-        
-        this.dispose();//cerrar esta ventana
-        menu.setVisible(true);//hacer visible el objeto menu
-        menu.setLocationRelativeTo(null);//hacer que la ventana menu aparezca al centro
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea continuar aniadiendo proveedores?");
+        if (respuesta == 0) {
+            codigo.requestFocus();
+            codigo.setText(null);
+            empresa.setText(null);
+            celular.setText(null);
+            telefono.setText(null);
+            direccion.setText(null);
+
+        } else {
+            this.dispose();//cerrar esta ventana
+            menu.setVisible(true);//hacer visible el objeto menu
+            menu.setLocationRelativeTo(null);//hacer que la ventana menu aparezca al centro
+        }
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

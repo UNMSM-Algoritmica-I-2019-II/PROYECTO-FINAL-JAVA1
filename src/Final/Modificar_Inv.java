@@ -29,8 +29,45 @@ public class Modificar_Inv extends javax.swing.JFrame {
     public Modificar_Inv() {
         initComponents();
         Cargarcontenido();
+        Cargar_empresas();
         Lista.setModel(modelo);
         bloquear();
+    }
+
+    private void Cargar_empresas() {
+        //Creamos objeto tipo Connection    
+        Connection conectar;
+        Statement s;
+        ResultSet result = null;
+
+//Creamos la Consulta SQL
+        String SSQL = "SELECT empresa FROM proveedores ORDER BY codigo ASC";
+
+//Establecemos bloque try-catch-finally
+        try {
+
+            //Establecemos conexión con la BD 
+            conectar = basedatos.conectar();
+            //Preparamos la consulta SQL
+            s = conectar.createStatement();
+            //Ejecutamos la consulta
+            result = s.executeQuery(SSQL);
+
+            //LLenamos nuestro ComboBox
+            proveedor.addItem("Seleccione una opción");
+
+            while (result.next()) {
+
+                proveedor.addItem(result.getString("empresa"));
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(e);
+
+        }
+
     }
 
     private void Cargarcontenido() {
@@ -76,7 +113,6 @@ public class Modificar_Inv extends javax.swing.JFrame {
         precio.setEnabled(true);
         precio.setEditable(true);
         proveedor.setEnabled(true);
-        proveedor.setEditable(true);
     }
 
     private void vaciar() {
@@ -84,7 +120,7 @@ public class Modificar_Inv extends javax.swing.JFrame {
         nombre.setText(null);
         stock.setText(null);
         precio.setText(null);
-        proveedor.setText(null);
+
     }
 
     /**
@@ -104,13 +140,13 @@ public class Modificar_Inv extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        proveedor = new javax.swing.JTextField();
         codigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
         precio = new javax.swing.JTextField();
         stock = new javax.swing.JTextField();
+        proveedor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,17 +183,6 @@ public class Modificar_Inv extends javax.swing.JFrame {
         jLabel5.setText("Stock :");
 
         jLabel6.setText("Proveedor:");
-
-        proveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                proveedorActionPerformed(evt);
-            }
-        });
-        proveedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                proveedorKeyPressed(evt);
-            }
-        });
 
         codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +230,7 @@ public class Modificar_Inv extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,19 +239,19 @@ public class Modificar_Inv extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(atras, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(modificar))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(stock)
+                                    .addComponent(proveedor, 0, 84, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(modificar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -251,7 +276,7 @@ public class Modificar_Inv extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
@@ -266,8 +291,8 @@ public class Modificar_Inv extends javax.swing.JFrame {
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -320,9 +345,9 @@ public class Modificar_Inv extends javax.swing.JFrame {
             String nombre_upd = nombre.getText();
             String precio_upd = precio.getText();
             String stock_upd = stock.getText();
-            String provee_upd = proveedor.getText();
+            String provee_upd = proveedor.getSelectedItem().toString();
 
-            if (nombre_upd == null || precio_upd == null || stock_upd == null || provee_upd == null) {
+            if (nombre.getText().length() == 0 || precio.getText().length() == 0 || stock.getText().length() == 0 ) {
                 bloquear();
                 vaciar();
                 JOptionPane.showMessageDialog(null, "algun campo esta vacio");
@@ -345,18 +370,6 @@ public class Modificar_Inv extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_modificarActionPerformed
-
-    private void proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_proveedorActionPerformed
-
-    private void proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_proveedorKeyPressed
-        // TODO add your handling code here:
-        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
-            modificar.requestFocus();
-            modificar.doClick();
-        }
-    }//GEN-LAST:event_proveedorKeyPressed
 
     private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
         // TODO add your handling code here:
@@ -442,7 +455,7 @@ public class Modificar_Inv extends javax.swing.JFrame {
     private javax.swing.JButton modificar;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField precio;
-    private javax.swing.JTextField proveedor;
+    private javax.swing.JComboBox<String> proveedor;
     private javax.swing.JTextField stock;
     // End of variables declaration//GEN-END:variables
 }

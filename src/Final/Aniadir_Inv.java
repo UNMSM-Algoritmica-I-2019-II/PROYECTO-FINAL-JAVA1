@@ -8,6 +8,7 @@ package Final;
 import com.sun.glass.events.KeyEvent;
 import Dbconected.basedatos;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,43 @@ public class Aniadir_Inv extends javax.swing.JFrame {
      */
     public Aniadir_Inv() {
         initComponents();
+        Cargar_empresas();
+    }
+
+    private void Cargar_empresas() {
+        //Creamos objeto tipo Connection    
+        Connection conectar;
+        Statement s;
+        ResultSet result = null;
+
+//Creamos la Consulta SQL
+        String SSQL = "SELECT empresa FROM proveedores ORDER BY codigo ASC";
+
+//Establecemos bloque try-catch-finally
+        try {
+
+            //Establecemos conexión con la BD 
+            conectar = basedatos.conectar();
+            //Preparamos la consulta SQL
+            s = conectar.createStatement();
+            //Ejecutamos la consulta
+            result = s.executeQuery(SSQL);
+
+            //LLenamos nuestro ComboBox
+            proveedor.addItem("Seleccione una opción");
+
+            while (result.next()) {
+
+                proveedor.addItem(result.getString("empresa"));
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(e);
+
+        }
+
     }
 
     /**
@@ -43,7 +81,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        proveedor = new javax.swing.JTextField();
+        proveedor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,17 +140,6 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         jLabel5.setText("Stock :");
 
         jLabel6.setText("Proveedor:");
-
-        proveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                proveedorActionPerformed(evt);
-            }
-        });
-        proveedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                proveedorKeyPressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,8 +217,8 @@ public class Aniadir_Inv extends javax.swing.JFrame {
 
     private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_codigoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -200,26 +227,26 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         menu2.setVisible(true);
         menu2.setLocationRelativeTo(null);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             nombre.requestFocus();//focusea al cuadro nombre 
         }
     }//GEN-LAST:event_codigoKeyPressed
 
     private void nombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             precio.requestFocus();//focusea al cuadro precio
         }
     }//GEN-LAST:event_nombreKeyPressed
 
     private void precioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precioKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             stock.requestFocus();//focusea al cuadro stock
         }
     }//GEN-LAST:event_precioKeyPressed
@@ -231,50 +258,46 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         String nombrer = nombre.getText();
         String precior = precio.getText();
         String stockr = stock.getText();
-        String provee = proveedor.getText();
+        String provee = proveedor.getSelectedItem().toString();
         Connection cn;
         Statement s;
         ResultSet rs;
-        
-        try{
-        cn= basedatos.conectar();
-        s = cn.createStatement();
-        rs= s.executeQuery("insert into inventario (codigo,articulo,stock,precio_unitario,proveedor)"
-                + "values ('"+cod+"','"+nombrer+"',"+stockr+","+precior+",'"+provee+"')");
-        
-        rs.close();
-        cn.close();
-        
-        }catch(Exception e){
+
+        try {
+            cn = basedatos.conectar();
+            s = cn.createStatement();
+            rs = s.executeQuery("insert into inventario (codigo,articulo,stock,precio_unitario,proveedor)"
+                    + "values ('" + cod + "','" + nombrer + "'," + stockr + "," + precior + ",'" + provee + "')");
+
+            rs.close();
+            cn.close();
+
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        
-        System.out.println("la cgd xddd");
-        this.dispose();//cerrar esta ventana
-        menu.setVisible(true);//hacer visible el objeto menu
-        menu.setLocationRelativeTo(null);//hacer que la ventana menu aparezca al centro
-    }//GEN-LAST:event_aceptarActionPerformed
 
-    private void proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proveedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_proveedorActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea continuar aniadiendo articulos?");
+        if (respuesta == 0) {
+            codigo.requestFocus();
+            codigo.setText(null);
+            nombre.setText(null);
+            stock.setText(null);
+            precio.setText(null);
+
+        } else {
+            this.dispose();//cerrar esta ventana
+            menu.setVisible(true);//hacer visible el objeto menu
+            menu.setLocationRelativeTo(null);//hacer que la ventana menu aparezca al centro
+        }
+    }//GEN-LAST:event_aceptarActionPerformed
 
     private void stockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stockKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             proveedor.requestFocus();
         }
-        
-    }//GEN-LAST:event_stockKeyPressed
 
-    private void proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_proveedorKeyPressed
-        // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-            aceptar.requestFocus();
-            aceptar.doClick();
-        }
-    }//GEN-LAST:event_proveedorKeyPressed
+    }//GEN-LAST:event_stockKeyPressed
 
     /**
      * @param args the command line arguments
@@ -285,7 +308,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-       
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -324,7 +347,7 @@ public class Aniadir_Inv extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField precio;
-    private javax.swing.JTextField proveedor;
+    private javax.swing.JComboBox<String> proveedor;
     private javax.swing.JTextField stock;
     // End of variables declaration//GEN-END:variables
 }

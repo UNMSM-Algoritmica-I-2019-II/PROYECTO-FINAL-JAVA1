@@ -8,19 +8,19 @@ package Dbconected;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Gonzalo
  */
 public class metodos {
-    
 
     public static basedatos conexion = new basedatos();
-    
-    static Connection conn=null;
-    static Statement st=null;
-    static ResultSet rs=null;
+
+    static Connection conn = null;
+    static Statement st = null;
+    static ResultSet rs = null;
     public static PreparedStatement sentencia_preparada;
     public static ResultSet resultado;
     public static int resultado_numero;
@@ -47,72 +47,65 @@ public class metodos {
 
         return busqueda_nombre;
     }
-    
-    public static String buscarUsuarioRegistrado(String usuario, String contraseña){
+
+    public static String buscarUsuarioRegistrado(String usuario, String contraseña) {
         String busqueda_usuario = null;
         Connection coneccion2 = null;
-        
-        
+
         try {
             coneccion2 = basedatos.conectar();
-            String sentencia_buscar_usuario = ("SELECT usuario,contraseña FROM empleados WHERE usuario = '"+ usuario +"' and contraseña ='"+ contraseña + "'" );
+            String sentencia_buscar_usuario = ("SELECT usuario,contraseña FROM empleados WHERE usuario = '" + usuario + "' and contraseña ='" + contraseña + "'");
             sentencia_preparada = coneccion2.prepareStatement(sentencia_buscar_usuario);
             resultado = sentencia_preparada.executeQuery();
-            if(resultado.next()){
+            if (resultado.next()) {
                 busqueda_usuario = "usuario encontrado";
-            }
-            else{
+            } else {
                 busqueda_usuario = "usuario no encontrado";
             }
             coneccion2.close();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return busqueda_usuario;
-        
-        
+
     }
-    
-    public static String ActualizarDatosInv(String dato,String actualizar,String codigo){
-    
+
+    public static String ActualizarDatosInv(String dato, String actualizar, String codigo) {
+
         Connection conexion;
-        
-        try{
-            conexion= basedatos.conectar();
+
+        try {
+            conexion = basedatos.conectar();
             String sentencia_actualizar = ("Update inventario set "
-                    + dato + " = '"+ actualizar +"' where codigo = '"+codigo+"'");
+                    + dato + " = '" + actualizar + "' where codigo = '" + codigo + "'");
             sentencia_preparada = conexion.prepareStatement(sentencia_actualizar);
             resultado = sentencia_preparada.executeQuery();
             conexion.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        
-    return null;
+
+        return null;
     }
-    
-    public static String ActualizarDatosProv(String dato,String actualizar,String codigo){
-    
+
+    public static String ActualizarDatosProv(String dato, String actualizar, String codigo) {
+
         Connection conexion;
-        
-        try{
-            conexion= basedatos.conectar();
+
+        try {
+            conexion = basedatos.conectar();
             String sentencia_actualizar = ("Update proveedores set "
-                    + dato + " = '"+ actualizar +"' where codigo = '"+codigo+"'");
+                    + dato + " = '" + actualizar + "' where codigo = '" + codigo + "'");
             sentencia_preparada = conexion.prepareStatement(sentencia_actualizar);
             resultado = sentencia_preparada.executeQuery();
             conexion.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        
-    return null;
+
+        return null;
     }
-    
-    
+
     
 
 }

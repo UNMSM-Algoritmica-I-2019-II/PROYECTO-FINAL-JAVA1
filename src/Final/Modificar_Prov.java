@@ -342,6 +342,7 @@ public class Modificar_Prov extends javax.swing.JFrame {
         menux.setVisible(true);
         menux.setLocationRelativeTo(null);
         this.dispose();
+        
 
     }//GEN-LAST:event_atrasActionPerformed
 
@@ -366,7 +367,7 @@ public class Modificar_Prov extends javax.swing.JFrame {
             String celular_upd = celular.getText();
             String direccion_upd = direccion.getText();
 
-            if (empresa_upd == null || telefono_upd == null || celular_upd == null || direccion_upd == null) {
+            if (empresa.getText().length() == 0 || telefono.getText().length() == 0 || celular.getText().length() ==0 || direccion.getText().length() == 0   ) {
                 bloquear();
                 vaciar();
                 JOptionPane.showMessageDialog(null, "algun campo esta vacio");

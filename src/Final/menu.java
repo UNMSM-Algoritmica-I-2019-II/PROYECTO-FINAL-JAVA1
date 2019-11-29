@@ -8,6 +8,7 @@ package Final;
 import Dbconected.basedatos;
 import java.awt.event.KeyEvent;
 import java.sql.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,10 +16,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Gonzalo
  */
 public class menu extends javax.swing.JFrame {
-
-    
-    
-     
 
     /**
      * Creates new form menu
@@ -28,88 +25,87 @@ public class menu extends javax.swing.JFrame {
         cargar();
         cargar2();
     }
-    
-    private void cargar(){
-    Connection cn;
+
+    private void cargar() {
+        Connection cn;
         Statement s;
         ResultSet rs;
-         try {
+        try {
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
             this.tablita.setModel(modelo);
             //Para conectarnos a nuestra base de datos
             //String url = "jdbc:oracle:thin:@localhost:1521:XE";
             // Establecemos los valores de cadena de conexión, usuario y contraseña
-           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
+            // cn = DriverManager.getConnection(url, "gonzalo", "admin");
             //Para ejecutar la consulta
             cn = basedatos.conectar();//cn variable de tipo coneccion
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-             rs = s.executeQuery("select * from inventario ORDER BY codigo ASC ");
+            rs = s.executeQuery("select * from inventario ORDER BY codigo ASC ");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
             int cantidadColumnas = rsMd.getColumnCount();
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
+                modelo.addColumn(rsMd.getColumnLabel(i));
             }
             //Creando las filas para el JTable
             while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
+                Object[] fila = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
             }
             rs.close();
             cn.close();
-       } catch (SQLException ex) {
-           System.out.println(ex);
-       }
-    
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
     }
-    
-    private void cargar2(){
-    Connection cn;
+
+    private void cargar2() {
+        Connection cn;
         Statement s;
         ResultSet rs;
-         try {
+        try {
             //Para establecer el modelo al JTable
             DefaultTableModel modelo = new DefaultTableModel();
             this.Tabla_proveedores.setModel(modelo);
             //Para conectarnos a nuestra base de datos
             //String url = "jdbc:oracle:thin:@localhost:1521:XE";
             // Establecemos los valores de cadena de conexión, usuario y contraseña
-           // cn = DriverManager.getConnection(url, "gonzalo", "admin");
+            // cn = DriverManager.getConnection(url, "gonzalo", "admin");
             //Para ejecutar la consulta
             cn = basedatos.conectar();//cn variable de tipo coneccion
             s = cn.createStatement();
             //Ejecutamos la consulta y los datos lo almacenamos en un ResultSet
-             rs = s.executeQuery("select * from proveedores Order by codigo asc ");
+            rs = s.executeQuery("select * from proveedores Order by codigo asc ");
             //Obteniendo la informacion de las columnas que estan siendo consultadas
             ResultSetMetaData rsMd = rs.getMetaData();
             //La cantidad de columnas que tiene la consulta
             int cantidadColumnas = rsMd.getColumnCount();
             //Establecer como cabezeras el nombre de las colimnas
             for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
+                modelo.addColumn(rsMd.getColumnLabel(i));
             }
             //Creando las filas para el JTable
             while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
+                Object[] fila = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
             }
             rs.close();
             cn.close();
-       } catch (SQLException ex) {
-           System.out.println(ex);
-       }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,20 +123,28 @@ public class menu extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablita = new javax.swing.JTable();
         Busqueda = new javax.swing.JButton();
-        recuadro = new javax.swing.JTextField();
+        codigo = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        articulo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_proveedores = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        buscarp = new javax.swing.JTextField();
+        codig = new javax.swing.JTextField();
         buscar_proveedor = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        empresa = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,14 +177,14 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        recuadro.addActionListener(new java.awt.event.ActionListener() {
+        codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                recuadroActionPerformed(evt);
+                codigoActionPerformed(evt);
             }
         });
-        recuadro.addKeyListener(new java.awt.event.KeyAdapter() {
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                recuadroKeyPressed(evt);
+                codigoKeyPressed(evt);
             }
         });
 
@@ -191,7 +195,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Eliminar");
+        jButton5.setText("Modificar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -205,6 +209,23 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        articulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                articuloActionPerformed(evt);
+            }
+        });
+        articulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                articuloKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Por Codigo:");
+
+        jLabel4.setText("Por Articulo:");
+
+        jLabel8.setText("R : Mostrar tabla completa.");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -213,38 +234,59 @@ public class menu extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1)
-                        .addGap(41, 41, 41)
-                        .addComponent(recuadro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addGap(109, 109, 109)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(articulo)
+                            .addComponent(codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
                         .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jButton4)
-                        .addGap(78, 78, 78)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jButton4)
+                .addGap(83, 83, 83)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(48, 48, 48))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(Busqueda)
-                    .addComponent(recuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel3))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(articulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton4)
@@ -276,14 +318,14 @@ public class menu extends javax.swing.JFrame {
 
         jLabel2.setText("Realizar una busqueda: ");
 
-        buscarp.addActionListener(new java.awt.event.ActionListener() {
+        codig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarpActionPerformed(evt);
+                codigActionPerformed(evt);
             }
         });
-        buscarp.addKeyListener(new java.awt.event.KeyAdapter() {
+        codig.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                buscarpKeyPressed(evt);
+                codigKeyPressed(evt);
             }
         });
 
@@ -308,52 +350,93 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setText("Eliminar");
+        jButton9.setText("Modificar");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
 
+        jLabel5.setText("Por Codigo:");
+
+        jLabel6.setText("Por Empresa:");
+
+        empresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                empresaKeyPressed(evt);
+            }
+        });
+
+        jLabel7.setText("R : Mostrar tabla completa.");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jButton6)
-                        .addGap(82, 82, 82)
-                        .addComponent(jButton9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel2)
-                        .addGap(41, 41, 41)
-                        .addComponent(buscarp, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(buscar_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jButton6)
+                                .addGap(83, 83, 83)
+                                .addComponent(jButton9)
+                                .addGap(85, 85, 85)
+                                .addComponent(jButton3))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jLabel2)
+                                        .addGap(165, 165, 165))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(codig, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(empresa))
+                                        .addGap(43, 43, 43)))
+                                .addComponent(buscar_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton8)))
+                        .addGap(0, 19, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(48, 48, 48))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(buscarp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscar_proveedor)
-                    .addComponent(jButton8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buscar_proveedor)
+                            .addComponent(jButton8)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(codig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton6)
@@ -393,21 +476,21 @@ public class menu extends javax.swing.JFrame {
         this.dispose();//cerrar objeto actual
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void recuadroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recuadroActionPerformed
+    private void codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_recuadroActionPerformed
+    }//GEN-LAST:event_codigoActionPerformed
 
-    private void recuadroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_recuadroKeyPressed
+    private void codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
-        Busqueda.requestFocus();
-        Busqueda.doClick();
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            Busqueda.requestFocus();
+            Busqueda.doClick();
         }
-    }//GEN-LAST:event_recuadroKeyPressed
+    }//GEN-LAST:event_codigoKeyPressed
 
-    private void buscarpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarpActionPerformed
+    private void codigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buscarpActionPerformed
+    }//GEN-LAST:event_codigActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -415,7 +498,7 @@ public class menu extends javax.swing.JFrame {
         anadir.setVisible(true);
         anadir.setLocationRelativeTo(null);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -428,93 +511,173 @@ public class menu extends javax.swing.JFrame {
 
     private void BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaActionPerformed
         // TODO add your handling code here:
-        Connection cn ;
-        Statement s ;
+        Connection cn;
+        Statement s;
         ResultSet rs;
-        String cuadrito = recuadro.getText();
-        
-        try{
-            DefaultTableModel modelo = new DefaultTableModel();
-            this.tablita.setModel(modelo);
-            cn = basedatos.conectar();
-            s = cn.createStatement();
-            rs = s.executeQuery("select * from inventario where codigo = '" + cuadrito + "' or articulo = '" + cuadrito + "'" );
-             ResultSetMetaData rsMd = rs.getMetaData();
-            //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
-            //Establecer como cabezeras el nombre de las colimnas
-            for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
+        String cuadrito = codigo.getText();
+        String cuadrito2 = articulo.getText();
+        String scuadrito = cuadrito2.toLowerCase();
+
+        if (articulo.getText().length() == 0) {
+            try {
+                DefaultTableModel modelo = new DefaultTableModel();
+                this.tablita.setModel(modelo);
+                cn = basedatos.conectar();
+                s = cn.createStatement();
+                rs = s.executeQuery("select * from inventario where (codigo = '" + cuadrito + "')");
+                ResultSetMetaData rsMd = rs.getMetaData();
+                //La cantidad de columnas que tiene la consulta
+                int cantidadColumnas = rsMd.getColumnCount();
+                //Establecer como cabezeras el nombre de las colimnas
+                for (int i = 1; i <= cantidadColumnas; i++) {
+                    modelo.addColumn(rsMd.getColumnLabel(i));
+                }
+                //Creando las filas para el JTable
+                while (rs.next()) {
+                    Object[] fila = new Object[cantidadColumnas];
+                    for (int i = 0; i < cantidadColumnas; i++) {
+                        fila[i] = rs.getObject(i + 1);
+                    }
+                    modelo.addRow(fila);
+                }
+                rs.close();
+                cn.close();
+                codigo.setText(null);
+                codigo.requestFocus();
+
+            } catch (Exception e) {
+                System.out.println(e);
+
+                codigo.setText(null);
+                codigo.requestFocus();
             }
-            //Creando las filas para el JTable
-            while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
+        }//fin si articulo esta vacio
+        else {
+
+            try {
+                DefaultTableModel modelo = new DefaultTableModel();
+                this.tablita.setModel(modelo);
+                cn = basedatos.conectar();
+                s = cn.createStatement();
+                rs = s.executeQuery("select * from inventario where (articulo = '" + scuadrito + "')");
+                ResultSetMetaData rsMd = rs.getMetaData();
+                //La cantidad de columnas que tiene la consulta
+                int cantidadColumnas = rsMd.getColumnCount();
+                //Establecer como cabezeras el nombre de las colimnas
+                for (int i = 1; i <= cantidadColumnas; i++) {
+                    modelo.addColumn(rsMd.getColumnLabel(i));
+                }
+                //Creando las filas para el JTable
+                while (rs.next()) {
+                    Object[] fila = new Object[cantidadColumnas];
+                    for (int i = 0; i < cantidadColumnas; i++) {
+                        fila[i] = rs.getObject(i + 1);
+                    }
+                    modelo.addRow(fila);
+                }
+                rs.close();
+                cn.close();
+                articulo.setText(null);
+                articulo.requestFocus();
+
+            } catch (Exception e) {
+                System.out.println(e);
+                articulo.setText(null);
+                articulo.requestFocus();
             }
-            rs.close();
-            cn.close();
-            recuadro.setText(null);
-            recuadro.requestFocus();
-            
-        
-        }catch(Exception e){
-            System.out.println(e);
         }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_BusquedaActionPerformed
 
     private void buscar_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_proveedorActionPerformed
         // TODO add your handling code here:
-        Connection cn ;
-        Statement s ;
+        Connection cn;
+        Statement s;
         ResultSet rs;
-        String buscar = buscarp.getText();
-        
-        try{
-            DefaultTableModel modelo = new DefaultTableModel();
-            this.Tabla_proveedores.setModel(modelo);
-            cn = basedatos.conectar();
-            s = cn.createStatement();
-            rs = s.executeQuery("select * from proveedores where empresa = '" + buscar + "' OR codigo = '" + buscar + "'" );
-             ResultSetMetaData rsMd = rs.getMetaData();
-            //La cantidad de columnas que tiene la consulta
-            int cantidadColumnas = rsMd.getColumnCount();
-            //Establecer como cabezeras el nombre de las colimnas
-            for (int i = 1; i <= cantidadColumnas; i++) {
-             modelo.addColumn(rsMd.getColumnLabel(i));
+        String buscar = codig.getText();
+        String buscar2=empresa.getText();
+        String sbuscar = buscar2.toLowerCase();
+
+        if (empresa.getText().length() == 0) {
+            try {
+                DefaultTableModel modelo = new DefaultTableModel();
+                this.Tabla_proveedores.setModel(modelo);
+                cn = basedatos.conectar();
+                s = cn.createStatement();
+                rs = s.executeQuery("select * from proveedores where codigo = '" + buscar + "'");
+                ResultSetMetaData rsMd = rs.getMetaData();
+                //La cantidad de columnas que tiene la consulta
+                int cantidadColumnas = rsMd.getColumnCount();
+                //Establecer como cabezeras el nombre de las colimnas
+                for (int i = 1; i <= cantidadColumnas; i++) {
+                    modelo.addColumn(rsMd.getColumnLabel(i));
+                }
+                //Creando las filas para el JTable
+                while (rs.next()) {
+                    Object[] fila = new Object[cantidadColumnas];
+                    for (int i = 0; i < cantidadColumnas; i++) {
+                        fila[i] = rs.getObject(i + 1);
+                    }
+                    modelo.addRow(fila);
+                }
+                rs.close();
+                cn.close();
+                codig.setText(null);
+                codig.requestFocus();
+
+            } catch (Exception e) {
+                System.out.println(e);
+                codig.setText(null);
+                codig.requestFocus();
             }
-            //Creando las filas para el JTable
-            while (rs.next()) {
-             Object[] fila = new Object[cantidadColumnas];
-             for (int i = 0; i < cantidadColumnas; i++) {
-               fila[i]=rs.getObject(i+1);
-             }
-             modelo.addRow(fila);
+        }//fin si
+        else {
+
+            try {
+                DefaultTableModel modelo = new DefaultTableModel();
+                this.Tabla_proveedores.setModel(modelo);
+                cn = basedatos.conectar();
+                s = cn.createStatement();
+                rs = s.executeQuery("select * from proveedores where empresa = '" + sbuscar + "'");
+                ResultSetMetaData rsMd = rs.getMetaData();
+                //La cantidad de columnas que tiene la consulta
+                int cantidadColumnas = rsMd.getColumnCount();
+                //Establecer como cabezeras el nombre de las colimnas
+                for (int i = 1; i <= cantidadColumnas; i++) {
+                    modelo.addColumn(rsMd.getColumnLabel(i));
+                }
+                //Creando las filas para el JTable
+                while (rs.next()) {
+                    Object[] fila = new Object[cantidadColumnas];
+                    for (int i = 0; i < cantidadColumnas; i++) {
+                        fila[i] = rs.getObject(i + 1);
+                    }
+                    modelo.addRow(fila);
+                }
+                rs.close();
+                cn.close();
+                empresa.setText(null);
+                empresa.requestFocus();
+
+            } catch (Exception e) {
+                System.out.println(e);
+                empresa.setText(null);
+                empresa.requestFocus();
             }
-            rs.close();
-            cn.close();
-            buscarp.setText(null);
-            buscarp.requestFocus();
-            
-        
-        }catch(Exception e){
-            System.out.println(e);
+
         }
+
+
     }//GEN-LAST:event_buscar_proveedorActionPerformed
 
-    private void buscarpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarpKeyPressed
+    private void codigKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigKeyPressed
         // TODO add your handling code here:
-        if(evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
             buscar_proveedor.requestFocus();
             buscar_proveedor.doClick();
-            }
-    }//GEN-LAST:event_buscarpKeyPressed
+        }
+    }//GEN-LAST:event_codigKeyPressed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -541,6 +704,27 @@ public class menu extends javax.swing.JFrame {
         eliminar.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void articuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_articuloActionPerformed
+
+    private void articuloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_articuloKeyPressed
+        // TODO add your handling code here:
+
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER) {
+            Busqueda.requestFocus();
+            Busqueda.doClick();
+        }
+    }//GEN-LAST:event_articuloKeyPressed
+
+    private void empresaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_empresaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER){
+            buscar_proveedor.requestFocus();
+            buscar_proveedor.doClick();
+        }
+    }//GEN-LAST:event_empresaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -580,8 +764,11 @@ public class menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Busqueda;
     private javax.swing.JTable Tabla_proveedores;
+    private javax.swing.JTextField articulo;
     private javax.swing.JButton buscar_proveedor;
-    private javax.swing.JTextField buscarp;
+    private javax.swing.JTextField codig;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JTextField empresa;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -592,12 +779,17 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField recuadro;
     private javax.swing.JTable tablita;
     // End of variables declaration//GEN-END:variables
 }
